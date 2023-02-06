@@ -85,7 +85,12 @@ export class AppComponent implements OnInit {
     this.track_artist = this.track_list[track_index].artist;
     this.now_playing =
       'PLAYING ' + (track_index + 1) + ' OF ' + this.track_list.length;
-    this.curr_track.addEventListener('ended', this.nextTrack);
+    this.curr_track.addEventListener('ended', ()=>{
+      if (this.track_index < this.track_list.length - 1) this.track_index += 1;
+      else this.track_index = 0;
+      this.loadTrack(this.track_index);
+      this.playTrack();
+    });
   }
 
   ngOnInit(): void {
@@ -148,7 +153,6 @@ export class AppComponent implements OnInit {
     else this.track_index = 0;
     this.loadTrack(this.track_index);
     this.playTrack();
-    this.curr_time = this.curr_time + 100;
   }
 
   prevTrack() {
